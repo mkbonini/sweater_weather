@@ -1,0 +1,3 @@
+class BookResults
+
+end
