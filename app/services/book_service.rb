@@ -6,5 +6,6 @@ class BookService
   end
   def self.search_books(search)
     response = conn.get("/search.json?q=#{search}")
+    JSON.parse(response.body, symbolize_names: true)
   end    
 end
