@@ -5,7 +5,7 @@ RSpec.describe BookService do
     response = BookService.search_books('denver,co')
 
     expect(response).to be_a(Hash)
-    expect(response[:works]).to be_a(Array)
-    expect(response[:work_count]).to be_a(Integer)
+    expect(response[:docs]).to be_a(Array)
+    expect(response[:numFound]).to be_a(Integer)
   end
 end
