@@ -3,6 +3,6 @@ class Forecast
 
   def initialize(data)
     @summary = data[:weather].first[:description]  
-    @temperature = data[:temp]
+    @temperature = data[:temp].round.to_s + " F"
   end
 end

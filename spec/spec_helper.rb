@@ -22,11 +22,11 @@ RSpec.configure do |config|
         to_return(status: 200, body: json_response_books)
 
     json_response_geo = File.read('spec/fixtures/geo.json')
-    stub_request(:get, "https://www.mapquestapi.com/geocoding/v1/address?key=LyEU3EOOQspJFf2V1Vuo2SgrQrrLvDAY&location=denver,co&thumbMaps=false").
+    stub_request(:get, "https://www.mapquestapi.com/geocoding/v1/address?key=#{ENV['location_api_key']}&location=denver,co&thumbMaps=false").
       to_return(status: 200, body: json_response_geo)
 
     json_response_geo = File.read('spec/fixtures/weather.json')
-    stub_request(:get, "https://api.openweathermap.org/data/2.5/onecall?appid=d44448240c4583469eaacc966b2d4e1d&lat=39.738453&lon=-104.984853&units=imperial").
+    stub_request(:get, "https://api.openweathermap.org/data/2.5/onecall?appid=#{ENV['weather_api_key']}&lat=39.738453&lon=-104.984853&units=imperial").
       to_return(status: 200, body: json_response_geo)
   
   end
