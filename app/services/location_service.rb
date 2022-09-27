@@ -6,6 +6,12 @@ class LocationService
   end
 
   def self.get_location(location)
-    conn.get("/geocoding/v1/address?location=#{location}&thumbMaps=false")
+    response = conn.get("/geocoding/v1/address?location=#{location}&thumbMaps=false")
+    lat_lon = JSON.parse(response.body, symbolize_names: true)
+
+    lat = lat_lon[:results][0][:locations][0][:latLng][:lat]
+    lon = lat_lon[:results][0][:locations][0][:latLng][:lng]
+
+    reply = {lat: lat, lon: lon}
   end
 end

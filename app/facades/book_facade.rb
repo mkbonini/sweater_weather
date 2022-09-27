@@ -1,11 +1,8 @@
 class BookFacade
   def self.search_books(location, quantity)
-    reply = LocationService.get_location(location)
-    lat_lon = JSON.parse(reply.body, symbolize_names: true)
-    lat = lat_lon[:results][0][:locations][0][:latLng][:lat]
-    lon = lat_lon[:results][0][:locations][0][:latLng][:lng]
+    lat_lon = LocationService.get_location(location)
 
-    weather = WeatherService.get_weather(lat, lon)
+    weather = WeatherService.get_weather(lat_lon[:lat], lat_lon[:lon])
     forecast = Forecast.new(weather[:current])
 
     book_results = BookService.search_books(location)
