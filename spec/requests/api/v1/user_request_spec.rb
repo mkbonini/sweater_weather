@@ -4,9 +4,9 @@ RSpec.describe 'user api requests' do
   it 'Create User via post request' do
     user_params = 
       ({
-        email: "Tom's",
-        password: "3984 Red Cedar Dr, Highlands Ranch, CO 80126",
-        confirm_password: "in the back"
+        email: "test@test.com",
+        password: "password123",
+        password_confirmation: "password123"
       })
     headers = {"CONTENT_TYPE" => "application/json"}
 
@@ -15,7 +15,7 @@ RSpec.describe 'user api requests' do
     created_user = User.last
 
     expect(created_user.email).to eq(user_params[:email])
-    expect(created_user.api).to be_a(String)
+    expect(created_user.api_key).to be_a(String)
 
     expect(response).to be_successful
 
@@ -51,7 +51,7 @@ RSpec.describe 'user api requests' do
     data = JSON.parse(response.body, symbolize_names: true)
  
     expect(data).to have_key(:error)
-    expect(data[:error]).to eq("email taken")
+    expect(data[:error]).to eq("Validation failed: Email has already been taken")
   end
  
   it 'password mismatch' do
@@ -69,7 +69,7 @@ RSpec.describe 'user api requests' do
     data = JSON.parse(response.body, symbolize_names: true)
  
     expect(data).to have_key(:error)
-    expect(data[:error]).to eq("password and confirmation mismatch")
+    expect(data[:error]).to eq("Validation failed: Password confirmation doesn't match Password")
   end
  
   it 'email format is invalid' do
@@ -89,6 +89,27 @@ RSpec.describe 'user api requests' do
     data = JSON.parse(response.body, symbolize_names: true)
  
     expect(data).to have_key(:error)
-    expect(data[:error]).to eq("Invalid Email")
+    expect(data[:error]).to eq("Validation failed: Email can't be blank")
+  end
+
+  it 'POST /sessions returns a user email and api_key' do
+    headers = {"CONTENT_TYPE" => "application/json"}
+    create_user_params = {
+      "user":{
+        "email": "test123@gmail.com",
+        "password": "test123",
+        "password_confirmation": "test123"
+      }
+    }
+    user_params = {
+      "email": "test123@gmail.com",
+      "password": "test123"
+    }
+    User.create!(create_user_params)
+    POST "/api/v1/sessions", headers: headers, params: JSON.generate(user: user_params)
+    data = JSON.parse(response.body, symbolize_names: true)
+
+    expect(response).to be_successful
+    binding.pry
   end
 end
