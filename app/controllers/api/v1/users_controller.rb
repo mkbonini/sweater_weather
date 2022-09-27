@@ -5,10 +5,10 @@ class Api::V1::UsersController < ApplicationController
 
   def show  
     user = User.find_by(email: user_params[:email])
-    if user.authenticate(user_params[:password])
+    if user && user.authenticate(user_params[:password])
       render json: UserSerializer.new( user )
     else
-      binding.pry
+      json_response( {"error": "Invalid email and/or password"}, :bad_request)
     end
   end
 
