@@ -92,20 +92,13 @@ RSpec.describe 'user api requests' do
     expect(data[:error]).to eq("Validation failed: Email can't be blank")
   end
 
-  xit 'POST /sessions returns a user email and api_key' do
+  it 'POST /sessions returns a user email and api_key' do
     headers = {"CONTENT_TYPE" => "application/json"}
-    create_user_params = {
-      "user":{
-        "email": "test123@gmail.com",
-        "password": "test123",
-        "password_confirmation": "test123"
-      }
-    }
     user_params = {
       "email": "test123@gmail.com",
       "password": "test123"
     }
-    User.create!(create_user_params)
+    User.create!(user_params)
     POST "/api/v1/sessions", headers: headers, params: JSON.generate(user: user_params)
     data = JSON.parse(response.body, symbolize_names: true)
 
