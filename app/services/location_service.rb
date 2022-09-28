@@ -14,4 +14,23 @@ class LocationService
 
     reply = {lat: lat, lon: lon}
   end
+
+  def self.get_route_time(origin, destination)
+    response = conn.get("/directions/v2/route") do |f|
+      f.params['from'] = origin
+      f.params['to'] = destination
+      f.params['outFormat'] = 'json'
+      f.params['ambiguities'] = 'ignore'
+      f.params['routeType'] = 'fastest'
+      f.params['doReverseGeocode'] = 'false'
+      f.params['avoidTimedConditions'] = 'false'
+    end
+
+    trip = JSON.parse(response.body, symbolize_names: true)
+    if trip[:info][:statuscode] != 402
+      trip[:route][:time]
+    else
+      "impossible route"
+    end
+  end
 end

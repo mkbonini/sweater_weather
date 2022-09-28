@@ -14,7 +14,7 @@ RSpec.describe "roadtrip Request" do
       "destination": "Pueblo,CO",
       "api_key": User.last.api_key
     }
-    post "/api/v1/road_trip", headers: headers, params: JSON.generate(roadtrip: roadtrip_params)
+    post "/api/v1/road_trip", headers: headers, params: JSON.generate(road_trip: roadtrip_params)
 
     expect(response).to be_successful
     result = JSON.parse(response.body, symbolize_names: true)[:data]
