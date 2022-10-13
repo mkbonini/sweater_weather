@@ -3,6 +3,7 @@ class WeatherFacade
     lat_lon = LocationService.get_location(location)
 
     weather = WeatherService.get_weather(lat_lon[:lat], lat_lon[:lon])
+    #this could be moved to Weather poro
     current = Current.new(weather[:current])
     daily_weather = []
     hourly_weather = []
