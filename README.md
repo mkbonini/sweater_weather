@@ -1,24 +1,20 @@
-# README
+# Sweater Weather
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
 
-Things you may want to cover:
+### About this Project
 
-* Ruby version
+Sweater Weather is an api only application that takes in locations and provides weather forcasts for the starting location and the destination at the time of arrival.  
 
-* System dependencies
+## Local Setup
 
-* Configuration
+1. Fork and Clone the repo
+2. Install gem packages: `bundle install`
+3. Setup the database: `rails db:{create,migrate}`
+4. Use `rails server` to start your local server
 
-* Database creation
 
-* Database initialization
+## Versions
 
-* How to run the test suite
+- Ruby 2.7.2
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- Rails 5.2.6
